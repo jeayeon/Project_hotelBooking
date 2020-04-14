@@ -3,12 +3,13 @@ package Client;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.Scanner;
 
 import Swing.Hmain;
 
-public class Cconnect {
+public class Cconnect implements Serializable {
 
 	private Socket withServer = null;
 	private InputStream reMsg = null;

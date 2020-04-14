@@ -1,5 +1,6 @@
 package Server;
 
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -7,7 +8,7 @@ import JDBC.DAOCenter;
 import JDBC.MDTO;
 import JDBC.RDTO;
 
-public class SCenter {
+public class SCenter   {
 
 	private ArrayList<Sconnect> sList = new ArrayList<>();
 	private ArrayList<MDTO> mList = new ArrayList<>();

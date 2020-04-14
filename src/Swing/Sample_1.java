@@ -54,20 +54,6 @@ public class Sample_1 extends JFrame implements ActionListener
 	JTextArea txtWrite;
 	BorderLayout bLayout = new BorderLayout();
 
-	Connection con = null;
-	Statement stmt = null;
-
-	// DB 설정부
-	String driver = "com.mysql.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/java";
-	String user = "root";
-	String pwd = "root";
-	ResultSet rs = null;
-
-	/*
-	 * 디 비 만 들 기 create database java; use java; create table java( memo text, year
-	 * varchar(10), month varchar(10), day varchar(10) );
-	 */
 	String sql;
 
 	public Sample_1() {
@@ -78,10 +64,9 @@ public class Sample_1 extends JFrame implements ActionListener
 		 * GregorianCalendar 는,Calendar 의 구상 서브 클래스이며, 세계의 대부분의 지역에서 사용되는 표준적인 달력 시스템을
 		 * 제공합니다.
 		 */
+		//필드에 현재 날짜의 year 을 나타내는
 		year = today.get(Calendar.YEAR);
-		System.out.println(year);
 		month = today.get(Calendar.MONTH) + 1;// 1월의 값이 0
-		System.out.println(month);
 
 		panNorth = new JPanel();
 		panNorth.add(btnBefore2 = new JButton(" ↓ "));
@@ -181,9 +166,7 @@ public class Sample_1 extends JFrame implements ActionListener
 			if (cal.get(Calendar.MONTH) != month - 1) {
 				break;
 			}
-			dbConnect();
 			todays = i;
-			checkday();
 			if (memoday == 1) { // memo가 저장된날은 짙은핑크색으로
 				calBtn[i + 6 + hopping].setForeground(new Color(255, 0, 255));
 			} else {
@@ -244,19 +227,13 @@ public class Sample_1 extends JFrame implements ActionListener
 			this.txtYear.setText(year + "년");
 			this.txtMonth.setText(month + "월");
 		} else if (cook.getSource() == btnAdd) {
-			dbConnect();
-			add();
 			calSet();
 			txtWrite.setText("");
 
 		} else if (cook.getSource() == btnDel) {
-			dbConnect();
-			del();
 			calSet();
 			txtWrite.setText("");
 		} else if (cook.getSource() == btnUpdate) {
-			dbConnect();
-			update();
 			calSet();
 			txtWrite.setText("");
 		}
@@ -265,8 +242,6 @@ public class Sample_1 extends JFrame implements ActionListener
 			day = Integer.parseInt(cook.getActionCommand());
 			// 버튼의 밸류 즉 1,2,3.... 문자를 정수형으로 변환하여 클릭한 날짜를 바꿔준다.
 			System.out.println(day);
-			dbConnect();
-			searchmemo();
 			calSet();
 		}
 	}// end actionperformed()
@@ -315,118 +290,7 @@ public class Sample_1 extends JFrame implements ActionListener
 
 	}// end calInput()
 
-	public void dbConnect() {
-		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, pwd);
-			stmt = con.createStatement();
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}// end dbConnect()
-
-	public void add() {
-		try {
-			String temp = txtWrite.getText();
-			if (temp.equals("")) {
-				JOptionPane.showMessageDialog(null, "내용이 없습니다.");
-				return;
-			}
-			sql = "insert into memo (memo,year,month,day) values (";
-			sql += "'" + temp + "',";
-			sql += "" + year + ",";
-			sql += "" + month + ",";
-			sql += "" + day + ");";
-			System.out.println(sql);
-			stmt.executeUpdate(sql);
-
-			stmt.close();
-			con.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}// end add()
-
-	public void update() {
-		try {
-			String temp = txtWrite.getText();
-			if (temp.equals("")) {
-				JOptionPane.showMessageDialog(null, "내용이 없습니다.");
-				return;
-			}
-			sql = "update memo set memo =";
-			sql += "'" + temp + "'";
-			sql += " where year=";
-			sql += year + " and month=";
-			sql += month + " and day=";
-			sql += +day + ";";
-			System.out.println(sql);
-			stmt.executeUpdate(sql);
-			stmt.close();
-			con.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}// end update();
-
-	public void del() {
-		try {
-			sql = "delete from memo where year=";
-			sql += year + " and month=";
-			sql += month + " and day=";
-			sql += +day + ";";
-			System.out.println(sql);
-			stmt.executeUpdate(sql);
-			stmt.close();
-			con.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}// end del();
-
-	public void searchmemo() {
-		try {
-
-			sql = "select memo from memo where year=";
-			sql += year + " and month=";
-			sql += month + " and day=";
-			sql += "" + day + ";";
-			System.out.println(sql);
-			rs = stmt.executeQuery(sql);
-			String gettemp = "";
-
-			while (rs.next()) {
-				gettemp += rs.getString("memo") + "  ";
-			}
-			txtWrite.setText(gettemp);
-
-			stmt.close();
-			con.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}// end searchmemo()
-
-	public void checkday() {
-		sql = "select * from memo where year=";
-		sql += year + " and month=";
-		sql += month + " and day=";
-		sql += "" + todays + ";";
-		// System.out.println(sql);
-		try {
-			rs = stmt.executeQuery(sql);
-			if (rs.next()) {
-				memoday = 1;
-			} else
-				memoday = 0;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}// end checkday()
 
 	public static void main(String[] args) {
 		new Sample_1();
