@@ -18,7 +18,7 @@ public class MDAO implements DAOInterface {
 	public void insert(String info) {
 		StringTokenizer st = new StringTokenizer(info);
 		String[] infoList = new String[7];
-		for(int i=0;i<infoList.length;i++) {
+		for (int i = 0; i < infoList.length; i++) {
 			infoList[i] = st.nextToken();
 		}
 
@@ -26,11 +26,11 @@ public class MDAO implements DAOInterface {
 		try {
 			String sql = "insert into member values(?,?,?,?,?,?,?)";
 			PreparedStatement psmt = conn.prepareStatement(sql);
-			for(int i=0;i<infoList.length;i++) {
-				if(i<=4) {
-					psmt.setString(i+1, infoList[i]);
-				}else {
-					psmt.setInt(i+1, Integer.parseInt(infoList[i]));
+			for (int i = 0; i < infoList.length; i++) {
+				if (i <= 4) {
+					psmt.setString(i + 1, infoList[i]);
+				} else {
+					psmt.setInt(i + 1, Integer.parseInt(infoList[i]));
 				}
 			}
 			psmt.executeUpdate();
@@ -41,6 +41,7 @@ public class MDAO implements DAOInterface {
 
 	}
 
+
 	public boolean chkId(String id) {
 		boolean idchk = false;
 		try {
@@ -50,8 +51,8 @@ public class MDAO implements DAOInterface {
 			rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				String Id = rs.getString("id");
-				if(id.equals(Id)) {
-					//중복이있는상태
+				if (id.equals(Id)) {
+					// 중복이있는상태
 					idchk = true;
 				}
 			}
@@ -74,22 +75,22 @@ public class MDAO implements DAOInterface {
 			String sql = "select id,pwd from member";
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
-			while(rs.next()) {
+			while (rs.next()) {
 				String dbid = rs.getString("id");
 				String dbpwd = rs.getString("pwd");
 //				System.out.println(dbid);
 //				System.out.println(dbpwd);
-				if(Logid.equals(dbid)&&Logpwd.equals(dbpwd)) {//db에 있는 아이디비밀번호와 로그인한 아이디비밀번호가 같을때
-					b= true;
+				if (Logid.equals(dbid) && Logpwd.equals(dbpwd)) {// db에 있는 아이디비밀번호와 로그인한 아이디비밀번호가 같을때
+					b = true;
 				}
-				
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return b;
-		
+
 	}
 
 }

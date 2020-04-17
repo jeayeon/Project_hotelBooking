@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Client.Cconnect;
+import JDBC.MDTO;
 
 public class Hmain extends JFrame implements ActionListener {
 
@@ -38,14 +40,13 @@ public class Hmain extends JFrame implements ActionListener {
 		this.setVisible(true); // 창을열고닫고하게하는 메소드
 		this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
 	}
-	
-	
+
 	public static Hmain getInstance(Cconnect c) {
-		if(Hm==null) {
+		if (Hm == null) {
 			Hm = new Hmain(c);
 		}
 		return Hm;
-		
+
 	}
 
 	private void North() {
@@ -105,10 +106,10 @@ public class Hmain extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object Click = e.getSource();
-		if (Click.equals(loginBtn)) { //로그인버튼 누를때
+		if (Click.equals(loginBtn)) { // 로그인버튼 누를때
 			Login = new Login(Ccon);
 			this.setVisible(false);
-		} else if (Click.equals(joinBtn)) { //회원가입버튼 누를때
+		} else if (Click.equals(joinBtn)) { // 회원가입버튼 누를때
 			Join = new Join(Ccon);
 			this.setVisible(false);
 		} else if (Click.equals(nonMBtn)) { // 비회원예약버튼 누를때
@@ -117,6 +118,7 @@ public class Hmain extends JFrame implements ActionListener {
 		}
 
 	}
+
 	public void setVisibertrue() {
 		this.setVisible(true);
 	}

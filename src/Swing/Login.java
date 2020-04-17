@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import Client.Cconnect;
+import JDBC.MDTO;
 
 public class Login extends JFrame {
 	
@@ -22,6 +24,7 @@ public class Login extends JFrame {
 	private JLabel chk;
 	private Hmain Hm = null;
 	private Cconnect Ccon = null;
+	private Choice cho = null;
 
 	Login(Cconnect c) {
 		super("로그인");
@@ -110,11 +113,13 @@ public class Login extends JFrame {
 		if(msg.equals("!no")) {//로그인이 완료되면
 			JOptionPane.showMessageDialog(null, "로그인이 완료되었습니다.","Message",JOptionPane.INFORMATION_MESSAGE);
 			dispose();
-			new Choice(Ccon);
+			cho = new Choice(Ccon);
 		}else if(msg.equals("!yes")) {
 			chk.setText("아이디 혹은 비밀번호가 틀렸습니다");
 			chk.setForeground(Color.red);
 		}
 		
 	}
+
+
 }

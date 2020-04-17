@@ -15,6 +15,11 @@ public class SMain {
 		Socket WithClient = null;
 		Server.bind(new InetSocketAddress("10.0.0.115", 7890));
 		
+		ServerSocket Server2 = new ServerSocket();
+		Socket WithClient2 = null;
+		Server2.bind(new InetSocketAddress("10.0.0.115", 4565));
+		
+		
 		SCenter sc = new SCenter();
 		
 		
@@ -23,7 +28,9 @@ public class SMain {
 			WithClient = Server.accept();
 			System.out.println("클라이언트 접속완료 정보 : "+WithClient);
 			
-			Sconnect s = new Sconnect(WithClient,sc);
+			WithClient2 = Server2.accept();
+			
+			Sconnect s = new Sconnect(WithClient,sc,WithClient2);
 			sc.addServer(s);
 			s.start();
 		}

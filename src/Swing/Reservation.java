@@ -26,9 +26,10 @@ public class Reservation extends JFrame {
 	private JLabel fewday, dayin, dayout;
 	private Choice ch = null;
 	private String[] peo = new String[5];
-	private Cconnect Ccon = null;
+	private Cconnect cc = null;
 	private String daychk = "";
 	private JComboBox AcomboBox, CcomboBox;
+	private JButton search;
 
 	private Calendar chkin = new GregorianCalendar();
 	private Calendar chkout = new GregorianCalendar();
@@ -36,7 +37,7 @@ public class Reservation extends JFrame {
 	Reservation(Choice choice, Cconnect cc) {
 		super("객실 예약");
 		ch = choice;
-		this.Ccon = cc;
+		this.cc = cc;
 		this.setLayout(null);
 		this.setBounds(100, 100, 620, 320);
 
@@ -133,7 +134,7 @@ public class Reservation extends JFrame {
 				// 시 *분*초*밀리언단위라 1000을곱해서 일로만듦
 				long bak = (chkin.getTimeInMillis() - chkout.getTimeInMillis()) / (24 * 60 * 60 * 1000);
 				bak = Math.abs(bak);
-				String bak2 = bak+"";
+				String bak2 = bak + "";
 				fewday.setText(bak2);
 			} else {
 				JOptionPane.showMessageDialog(null, "날짜 입력을 잘못했습니다");
@@ -235,32 +236,79 @@ public class Reservation extends JFrame {
 
 			}
 		});
-		
-		JButton search = new JButton("검 색");
+
+		search = new JButton("검 색");
 		search.setFont(new Font("굴림", Font.PLAIN, 16));
 		search.setBounds(250, 190, 138, 42);
 		this.add(search);
 		search.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(AcomboBox.getSelectedIndex());
+//				cc.send("RoomList:");
+//				try {
+//					Thread.sleep(70);
+					if (!dayin.getText().equals("") && !dayout.getText().equals("") && AcomboBox.getSelectedIndex() >= 1
+							|| CcomboBox.getSelectedIndex() >= 1) {
+						int adult =AcomboBox.getSelectedIndex();
+						int child = CcomboBox.getSelectedIndex();
+						Comparedate(adult,child);
+						
+					}
+
+//				} catch (InterruptedException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 			}
+
 		});
 
+	}
+	
+	private void Comparedate(int adult, int child) {
+		new CompareDate(chkin,chkout,cc,this,adult,child);		
 	}
 
 	private void ComboboxSet() {
 		for (int i = 0; i < peo.length; i++) {
 			peo[i] = i + "";
 		}
-		AcomboBox= new JComboBox(peo); // 성인 인원체크
+		AcomboBox = new JComboBox(peo); // 성인 인원체크용
 		AcomboBox.setBounds(462, 138, 35, 28);
 		this.add(AcomboBox);
 
-		CcomboBox = new JComboBox(peo); // 아동 인원체크
+		CcomboBox = new JComboBox(peo); // 아동 인원체크용
 		CcomboBox.setBounds(520, 138, 35, 28);
 		this.add(CcomboBox);
+		
+		AcomboBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int adult =AcomboBox.getSelectedIndex();
+				int child = CcomboBox.getSelectedIndex();
+				if(adult+child>4) {
+					search.setEnabled(false);
+				}else {
+					search.setEnabled(true);
+				}
+				
+			}
+		});
+		CcomboBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int adult =AcomboBox.getSelectedIndex();
+				int child = CcomboBox.getSelectedIndex();
+				if(adult+child>4) {
+					search.setEnabled(false);
+				}else {
+					search.setEnabled(true);
+				}
+			}
+		});
 
 	}
 

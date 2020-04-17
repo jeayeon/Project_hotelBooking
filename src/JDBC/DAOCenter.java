@@ -22,6 +22,13 @@ public class DAOCenter {
 		return dc;
 	}
 	
+	public ArrayList<Object> RoomList(String peo) {
+		ArrayList<Object> rList = new ArrayList<>();
+		RDAO dao = new RDAO();
+		rList = dao.RoomList(peo);
+		return rList;
+	}
+	
 	public boolean idchk(String id) {
 		MDAO dao = new MDAO();
 		if(dao.chkId(id)==true) {//중복이면

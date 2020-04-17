@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,12 +13,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import Client.Cconnect;
+import JDBC.MDTO;
 
 public class Choice extends JFrame {
 	private Cconnect cc = null;
+	private Reservation rs = null;
 
-	public Choice() {
-		//this.cc = ccon;
+	public Choice(Cconnect ccon) {
+		this.cc = ccon;
 		this.setLayout(null); // 배치관리자 해제
 		this.setBounds(0, 0, 250, 280);
 		setLocationRelativeTo(null); // 바탕화면 한가운데 띄우기
@@ -124,15 +127,16 @@ public class Choice extends JFrame {
 
 	private void newReservation() {
 		this.setVisible(false);
-		new Reservation(this,cc);
+		rs =new Reservation(this,cc);
 		
 	}
 
 	public void setVisibletrue() {
 		this.setVisible(true);
 	}
-	public static void main(String[] args) {
-		new Choice();
-	}
+//	public static void main(String[] args) {
+//		new Choice();
+//	}
+
 
 }
