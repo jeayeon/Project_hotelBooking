@@ -44,6 +44,13 @@ public class DAOCenter {
 		
 		
 	}
+	public ArrayList<Object> getInfo(String id) {
+		ArrayList<Object> mInfo = new ArrayList<>();
+		MDAO dao = new MDAO();
+		mInfo =dao.getInfo(id);
+		return mInfo;
+	}
+	
 	public boolean Login(String same) {
 		MDAO dao = new MDAO();
 		
@@ -51,6 +58,19 @@ public class DAOCenter {
 			return true;
 		}
 		return false;
+	}
+
+	public ArrayList<Object> BookingList() {
+		ArrayList<Object> rList = new ArrayList<>();
+		BDAO dao = new BDAO();
+		rList = dao.BookingList();
+		return rList;
+	}
+
+	public void bookingadd(String binfo) {
+		BDAO dao = new BDAO();
+		dao.bookingadd(binfo);
+		
 	}
 	
 

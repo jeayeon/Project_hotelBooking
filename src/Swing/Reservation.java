@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -30,6 +31,7 @@ public class Reservation extends JFrame {
 	private String daychk = "";
 	private JComboBox AcomboBox, CcomboBox;
 	private JButton search;
+	private ArrayList<String> bInfo = new ArrayList<>();
 
 	private Calendar chkin = new GregorianCalendar();
 	private Calendar chkout = new GregorianCalendar();
@@ -121,14 +123,20 @@ public class Reservation extends JFrame {
 	}
 
 	public void daychk(String a, int year, int mon, int d) {// a = 선택한 전체날짜 , int형은 전체날짜 분할상테
+//		System.out.println(daychk);
 		if (daychk.equals("in")) {// chkin,out라벨에 날짜를 집어넣기위한 조건문
 			dayin.setText(a);
 			chkin.set(year, mon, d);
+			System.out.println("chkin: "+ chkin.getTime());
 		} else {
 			dayout.setText(a);
 			chkout.set(year, mon, d);
+			System.out.println("chout: "+ chkout.getTime());
 		}
+		System.out.println("chkin:두번쨰 "+ chkin.getTime());
+		System.out.println("chout:두번째 "+ chkout.getTime());
 		int day2 = chkin.compareTo(chkout); // 리턴값이 -1이면 체크아웃 숫자가 더큰것
+		System.out.println("리턴값: "+ day2);
 		if (!dayin.getText().equals("") && !dayout.getText().equals("")) {
 			if (day2 < 0) { // -1일때만 체크인 날짜보다 체크아웃날짜가 뒤에있는거다 같으면 대실인데 대실은빼자.
 				// 시 *분*초*밀리언단위라 1000을곱해서 일로만듦
@@ -192,7 +200,7 @@ public class Reservation extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				daychk = "out";
-				System.out.println(daychk);
+//				System.out.println(daychk);
 				newCalendar();
 			}
 		});
@@ -252,6 +260,7 @@ public class Reservation extends JFrame {
 							|| CcomboBox.getSelectedIndex() >= 1) {
 						int adult =AcomboBox.getSelectedIndex();
 						int child = CcomboBox.getSelectedIndex();
+						bInfoadd(adult,child);
 						Comparedate(adult,child);
 						
 					}
@@ -265,9 +274,22 @@ public class Reservation extends JFrame {
 		});
 
 	}
+	private void bInfoadd(int adult, int child) {
+		bInfo.add(dayin.getText()); 
+		bInfo.add(dayout.getText());
+		bInfo.add(fewday.getText());
+		bInfo.add(adult+child+"");
+		
+	}
 	
 	private void Comparedate(int adult, int child) {
-		new CompareDate(chkin,chkout,cc,this,adult,child);		
+		String uchkin = dayin.getText();
+		String uchkout = dayout.getText();
+		new CompareDate(chkin,chkout,cc,this,adult,child,uchkin,uchkout);		
+	}
+	
+	public ArrayList<String> getbInfo() {
+		return bInfo;
 	}
 
 	private void ComboboxSet() {

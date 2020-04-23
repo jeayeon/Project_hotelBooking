@@ -232,7 +232,7 @@ public class CalendarData extends JFrame implements ActionListener {
 			dispose();
 		}
 		//System.out.println(dayOfweek);
-		for(int i=0;i<cal.getActualMaximum(Calendar.DATE);i++) {
+		for(int i=0;i<cal.getActualMaximum(Calendar.DATE);i++) {// 선택버튼 누를시
 			if(click.equals(calBtn[i+dayOfweek-1])) { // 
 				//System.out.println(calBtn[i+dayOfweek-1].getText());
 				String day = calBtn[i+dayOfweek-1].getText();
@@ -252,6 +252,7 @@ public class CalendarData extends JFrame implements ActionListener {
 		int d = Integer.parseInt(day);
 		Calendar c = new GregorianCalendar(year, month-1, d);
 		String a=date.format(c.getTime()); 
+		System.out.println(a);
 		rv.daychk(a,year,month-1,d);
 		//System.out.println(a);
 	}

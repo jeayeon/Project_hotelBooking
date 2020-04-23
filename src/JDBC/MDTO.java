@@ -1,6 +1,8 @@
 package JDBC;
 
-public class MDTO {
+import java.io.Serializable;
+
+public class MDTO implements Serializable {
 	private String id;
 	private String pwd;
 	private String name;

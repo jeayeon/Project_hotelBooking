@@ -6,17 +6,15 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTable;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 
 public class windowbilder extends JFrame {
 
 	private JPanel contentPane;
-	private JTable table;
-	private JButton reser ,back;
 
 	/**
 	 * Launch the application.
@@ -39,26 +37,48 @@ public class windowbilder extends JFrame {
 	 */
 	public windowbilder() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 400);
+		setBounds(100, 100, 303, 439);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setContentPane(contentPane);
 		
-		table = new JTable();
-		table.setBounds(0, 0, 299, 277);
-		contentPane.add(table);
+
 		
-		 back = new JButton("<이전");
-		back.setBounds(12, 317, 97, 23);
-		contentPane.add(back);
+		JLabel renumList = new JLabel("예약리스트");
+		renumList.setBounds(125, 0, 68, 15);
+		contentPane.add(renumList);
+
 		
-		JLabel lblNewLabel = new JLabel("<html>광고주를모십니다<br> 사용법: 방을클릭하면 현재 글이써져있는곳에<br> 사진이출력되고 예약하기버튼을누르시면됩니다</html>");
-		lblNewLabel.setBounds(311, 10, 261, 267);
-		contentPane.add(lblNewLabel);
 		
-		reser = new JButton("예약하기");
-		reser.setBounds(397, 317, 97, 23);
-		contentPane.add(reser);
+		JLabel renum = new JLabel("예약번호:");
+		renum.setBounds(45, 136, 68, 21);
+		contentPane.add(renum);
+		
+		JLabel name = new JLabel("성      명:");
+		name.setBounds(45, 167, 68, 21);
+		contentPane.add(name);
+		
+		JLabel chkin = new JLabel("체 크  인:");
+		chkin.setBounds(45, 198, 68, 21);
+		contentPane.add(chkin);
+		
+		JLabel chkout = new JLabel("체크아웃:");
+		chkout.setBounds(45, 229, 68, 21);
+		contentPane.add(chkout);
+		
+		JLabel fewday = new JLabel("숙박기간:");
+		fewday.setBounds(45, 260, 68, 21);
+		contentPane.add(fewday);
+		
+		JLabel total = new JLabel("합      계:");
+		total.setBounds(45, 291, 68, 21);
+		contentPane.add(total);
+		
+		
+		
+		
+		
+		
 	}
 }

@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import JDBC.MDTO;
@@ -19,16 +20,31 @@ public class Cconnect {
 	private InputStream reMsg = null;
 	private OutputStream sendMsg = null;
 	private Hmain Hmain = null;
-	private byte[] getMsg =new byte[1024];
-	private ArrayList<RDTO> rList = null;
+	private ArrayList<Object> List = null;
+	private Object objectList = null;
 
-	public Cconnect(Socket withServer, Socket withServer2) {
+	public Cconnect(Socket withServer) {
 
 		this.withServer = withServer;
-		this.withServer2 = withServer2;
+		init();
 		receive();
 		Serializablereceive();
 		Hmain = Hmain.getInstance(this);
+	}
+
+	private void init() {
+		try {
+			byte[] getMsg1 = new byte[200];
+			reMsg = withServer.getInputStream();
+			reMsg.read(getMsg1);
+			String get = new String(getMsg1).trim();
+			int port = Integer.parseInt(get);
+			withServer2 = new Socket("10.0.0.115",port);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void receive() {
@@ -39,17 +55,17 @@ public class Cconnect {
 				System.out.println("receive start");
 				try {
 					while (true) {
+						byte[] getMsg1 = new byte[200];
 						reMsg = withServer.getInputStream();
-						reMsg.read(getMsg);
-						String get = new String(getMsg).trim();
-//						get = get.trim(); 트림은 공백을제고하고 리턴값으로 String를 받기에 꼭 앞에 변수를 적어주어야한다
+						reMsg.read(getMsg1);
+						String get = new String(getMsg1).trim();
 						char num = get.charAt(0);
 						if (num == '!') { // 로그인
 							Hmain.Login(get);
 							// Cconect생성자가 호출할때 띄우는데 회원가입후 join클래스에서 Hmain이 생성되기떄문에 널포인트에러가뜸
 						} else if (num == '@') { // id중복체크
 							Hmain.join(get);
-						}
+						} 
 					}
 
 				} catch (IOException e) {
@@ -58,23 +74,26 @@ public class Cconnect {
 				}
 
 			}
+
 		}).start();
 
 	}
 
 	private void Serializablereceive() { // 객체를 받을때 사용할 메소드
 		new Thread(new Runnable() {
-
 			@Override
 			public void run() {
 				try {
 					while (true) {
+						byte[] getMsg = new byte[1024];
 						reMsg = withServer2.getInputStream();
+						System.out.println("도착안했어");
 						reMsg.read(getMsg);
 						ByteArrayInputStream bais = new ByteArrayInputStream(getMsg);
 						ObjectInputStream ois = new ObjectInputStream(bais);
-						Object objectMember = ois.readObject();
-						rList = (ArrayList<RDTO>) objectMember;
+						objectList = ois.readObject();
+						List = (ArrayList<Object>) objectList;
+						System.out.println("C커넥트에서 사이즈:" + List.size());
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -87,7 +106,7 @@ public class Cconnect {
 	public void send(String Msg) {
 		try {
 			sendMsg = withServer.getOutputStream();
-			byte[] sMsg = Msg.getBytes();
+			byte[] sMsg = Msg.trim().getBytes();
 			sendMsg.write(sMsg);
 
 		} catch (IOException e) {
@@ -97,8 +116,8 @@ public class Cconnect {
 
 	}
 
-	public ArrayList<RDTO> getrList() {
-		return rList;
+	public Object getrList() {
+		return objectList;
 	}
 
 }

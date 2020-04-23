@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class MDAO implements DAOInterface {
@@ -41,7 +42,6 @@ public class MDAO implements DAOInterface {
 
 	}
 
-
 	public boolean chkId(String id) {
 		boolean idchk = false;
 		try {
@@ -61,6 +61,31 @@ public class MDAO implements DAOInterface {
 			e.printStackTrace();
 		}
 		return idchk;
+	}
+
+	public ArrayList<Object> getInfo(String id) {
+		ArrayList<Object> mInfo = new ArrayList<>();
+		try {
+			c.orclelode();
+			String sql = "select * from member where id=?";
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			psmt.executeUpdate();
+			rs = psmt.executeQuery(sql);
+			while (rs.next()) {
+				MDTO d =new MDTO();
+				d.setId(rs.getString("id"));
+				d.setName(rs.getString("name"));
+				d.setAddr(rs.getString("addr"));
+				d.setTel(rs.getString("tel"));
+				mInfo.add(d);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return mInfo;
 	}
 
 	public boolean Login(String same) {

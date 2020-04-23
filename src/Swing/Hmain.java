@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Client.Cconnect;
@@ -21,11 +22,12 @@ public class Hmain extends JFrame implements ActionListener {
 
 	private JLabel imageL;
 	private JPanel Sp = new JPanel();
-	private JButton loginBtn, joinBtn, nonMBtn;
+	private JButton loginBtn, joinBtn, reBtn;
 	private ImageIcon img = null;
 	private Cconnect Ccon = null;
 	private Join Join = null;
 	private Login Login = null;
+	private String Id = "";
 	public static Hmain Hm = null;
 
 	private Hmain(Cconnect c) {
@@ -77,19 +79,23 @@ public class Hmain extends JFrame implements ActionListener {
 		joinBtn.setFocusPainted(false);
 		loginP.add(joinBtn);
 
-		nonMBtn = new JButton("비회원예약");
-		nonMBtn.setFont(new Font("돋움", Font.PLAIN, 12));
-		nonMBtn.setBorderPainted(false);
-		nonMBtn.setContentAreaFilled(false);
-		nonMBtn.setFocusPainted(false);
-		loginP.add(nonMBtn);
+		reBtn = new JButton("예약");
+		reBtn.setFont(new Font("돋움", Font.PLAIN, 12));
+		reBtn.setBorderPainted(false);
+		reBtn.setContentAreaFilled(false);
+		reBtn.setFocusPainted(false);
+		loginP.add(reBtn);
 		nP.add(loginP, "North");
 
 		loginBtn.addActionListener(this);
 		joinBtn.addActionListener(this);
-		nonMBtn.addActionListener(this);
+		reBtn.addActionListener(this);
 		this.add(nP, "North");
 
+	}
+
+	public void Logouttext() {
+		loginBtn.setText("로그아웃");
 	}
 
 	private void Center() {
@@ -106,16 +112,31 @@ public class Hmain extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object Click = e.getSource();
-		if (Click.equals(loginBtn)) { // 로그인버튼 누를때
-			Login = new Login(Ccon);
-			this.setVisible(false);
-		} else if (Click.equals(joinBtn)) { // 회원가입버튼 누를때
-			Join = new Join(Ccon);
-			this.setVisible(false);
-		} else if (Click.equals(nonMBtn)) { // 비회원예약버튼 누를때
-//			new Choice(Ccon);
-			this.setVisible(false);
+		if(loginBtn.getText().equals("로그인")) {
+			if (Click.equals(loginBtn)) { // 로그인버튼 누를때
+				Login = new Login(Ccon);
+				this.setVisible(false);
+			} else if (Click.equals(joinBtn)) { // 회원가입버튼 누를때
+				Join = new Join(Ccon);
+				this.setVisible(false);
+			} else if (Click.equals(reBtn)) { // 비회원예약버튼 누를때
+				new Choice(Ccon);
+				this.setVisible(false);
+			}
+		}else{//로그아웃일때
+			if (Click.equals(loginBtn)) { // 로그인버튼 누를때
+				loginBtn.setText("로그인");
+				Id = "";
+				JOptionPane.showMessageDialog(null, "로그아웃 되었습니다.", "Message", JOptionPane.INFORMATION_MESSAGE);
+			} else if (Click.equals(joinBtn)) { // 회원가입버튼 누를때
+				Join = new Join(Ccon);
+				this.setVisible(false);
+			} else if (Click.equals(reBtn)) { // 비회원예약버튼 누를때
+				new Choice(Ccon);
+				this.setVisible(false);
+			}
 		}
+		
 
 	}
 
@@ -130,6 +151,14 @@ public class Hmain extends JFrame implements ActionListener {
 
 	public void Login(String msg) {
 		this.Login.send(msg);
+	}
+
+	public String getId() {
+		return Id;
+	}
+
+	public void setId(String id) {
+		Id = id;
 	}
 
 }
