@@ -77,17 +77,17 @@ public class Room extends JFrame {
 	}
 
 	private void imageset() {
-		room1 = new ImageIcon("D:\\room1.jpg");
+		room1 = new ImageIcon("D:\\java_src\\Project_hotelBooking\\room1.jpg");
 		Image hm1 = room1.getImage(); // 이미지아이콘을 이미지로 변경
 		hm1 = hm1.getScaledInstance(260, 260, Image.SCALE_SMOOTH); // 이미지 사이즈 조절
 		room1 = new ImageIcon(hm1); // 다시 이미지아이콘으로 변경
 
-		room2 = new ImageIcon("D:\\room2.jpg");
+		room2 = new ImageIcon("D:\\java_src\\Project_hotelBooking\\room2.jpg");
 		Image hm2 = room2.getImage(); // 이미지아이콘을 이미지로 변경
 		hm2 = hm2.getScaledInstance(260, 260, Image.SCALE_SMOOTH); // 이미지 사이즈 조절
 		room2 = new ImageIcon(hm2); // 다시 이미지아이콘으로 변경
 
-		room3 = new ImageIcon("D:\\room3.jpg");
+		room3 = new ImageIcon("D:\\java_src\\Project_hotelBooking\\room3.jpg");
 		Image hm3 = room3.getImage(); // 이미지아이콘을 이미지로 변경
 		hm3 = hm3.getScaledInstance(260, 260, Image.SCALE_SMOOTH); // 이미지 사이즈 조절
 		room3 = new ImageIcon(hm3); // 다시 이미지아이콘으로 변경

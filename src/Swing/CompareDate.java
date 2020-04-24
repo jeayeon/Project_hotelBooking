@@ -39,7 +39,7 @@ public class CompareDate {
 		CompareDay();
 		roomchoice();// 리저베이션에서 검색버튼 누른후 인원수에 맞게나온 기본방정보를 Room클래스로 보내주게
 	}
-	// 이거 지워지기전까지만 롤백하자
+	
 	private void CompareDay() {
 		try {
 			int n = 1;

@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
@@ -24,7 +25,7 @@ public class mConfirm extends JFrame {
 	private JPanel JlistP;
 	private JList<String> jlist;
 	private JScrollPane jScrollpane;
-	private DefaultListModel<String> dm =new DefaultListModel<>();
+	private DefaultListModel<String> dm = new DefaultListModel<>();
 	private JLabel renumList2, name2, chkin2, chkout2, fewday2, total2;
 	private ArrayList<BDTO> bList = null;
 	private Hmain Hm = null;
@@ -32,7 +33,7 @@ public class mConfirm extends JFrame {
 	public mConfirm(Hmain Hm, ArrayList<BDTO> bList) {
 		this.bList = bList;
 		this.Hm = Hm;
-		
+
 		this.setLayout(null);
 		this.setBounds(100, 100, 303, 439);
 		renumListSet();
@@ -46,12 +47,17 @@ public class mConfirm extends JFrame {
 	}
 
 	private void renumListSet() {
-		for(int i =0;i<bList.size();i++) {
-			if(Hm.getId().equals(bList.get(i).getId())) {
-				dm.addElement(bList.get(i).getRenum());
+		System.out.println("여기서도:" + Hm.getId());
+		if (bList.get(0).getId() != null) {
+			for (int i = 0; i < bList.size(); i++) {
+				if (Hm.getId().equals(bList.get(i).getId())) {
+					dm.addElement(bList.get(i).getRenum());
+				}
 			}
+		} else {
+			JOptionPane.showMessageDialog(null, "예약내용이 없습니다.", "Message", JOptionPane.INFORMATION_MESSAGE);
 		}
-		
+
 	}
 
 	private void binfoSet() {
@@ -86,22 +92,23 @@ public class mConfirm extends JFrame {
 		jScrollpane = new JScrollPane(jlist);
 		jScrollpane.setBounds(12, 28, 263, 82);
 		this.add(jScrollpane);
-		
+
 		jlist.addListSelectionListener(new ListSelectionListener() {
-			
+
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				int row = jlist.getSelectedIndex(); //클릭한 행의 인덱스반환
-				System.out.println(jlist.getSelectedIndex());
-				renumList2.setText(bList.get(row).getRenum());
-				name2.setText(bList.get(row).getName());
-				chkin2.setText(bList.get(row).getCheckin());
-				chkout2.setText(bList.get(row).getCheckout());
-				fewday2.setText(bList.get(row).getNight()+"");
-				total2.setText(bList.get(row).getPrice()+"");
-				
-				
-				
+				String renumber = jlist.getSelectedValue();// 클릭한 행의 값 반환
+				for (int i = 0; i < bList.size(); i++) {
+					if (renumber.equals(bList.get(i).getRenum())) {
+						renumList2.setText(bList.get(i).getRenum());
+						name2.setText(bList.get(i).getName());
+						chkin2.setText(bList.get(i).getCheckin());
+						chkout2.setText(bList.get(i).getCheckout());
+						fewday2.setText(bList.get(i).getNight() + "");
+						total2.setText(bList.get(i).getPrice() + "");
+					}
+				}
+
 			}
 		});
 

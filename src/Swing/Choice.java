@@ -53,7 +53,7 @@ public class Choice extends JFrame {
 	}
 
 	private void LabelSetting() {
-		ImageIcon hc1 = new ImageIcon("D:\\Chk1.jpg");
+		ImageIcon hc1 = new ImageIcon("D:\\java_src\\Project_hotelBooking\\Chk1.jpg");
 		Image hm1 = hc1.getImage(); // 이미지아이콘을 이미지로 변경
 		hm1 = hm1.getScaledInstance(35, 35, Image.SCALE_SMOOTH); // 이미지 사이즈 조절
 		hc1 = new ImageIcon(hm1); // 다시 이미지아이콘으로 변경
@@ -185,6 +185,7 @@ public class Choice extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				System.out.println("회원아이디:" + Hm.getId());
 				if (!Hm.getId().equals("")) {// 회원이면
 					 new mConfirm(Hm,bList);
 					dispose();

@@ -62,7 +62,6 @@ public class Login extends JFrame {
 
 			}
 		});
-
 		JButton login = new JButton("로그인");
 		login.setBounds(70, 145, 90, 23);
 		this.add(login);
@@ -75,6 +74,7 @@ public class Login extends JFrame {
 					if (login.getText().equals("로그인")) {
 						String info = textField.getText() + " " + textField_1.getText();
 						Ccon.send("same:" + info);
+						System.out.println(textField.getText());
 						Hm.setId(textField.getText());
 					}
 				}

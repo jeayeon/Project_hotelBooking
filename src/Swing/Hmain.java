@@ -100,7 +100,7 @@ public class Hmain extends JFrame implements ActionListener {
 
 	private void Center() {
 
-		img = new ImageIcon("D:\\hotel.jpg");
+		img = new ImageIcon("D:\\java_src\\Project_hotelBooking\\hotel.jpg");
 		Image hm = img.getImage(); // 이미지아이콘을 이미지로 변경
 		hm = hm.getScaledInstance(700, 460, Image.SCALE_SMOOTH); // 이미지 사이즈 조절
 		img = new ImageIcon(hm); // 다시 이미지아이콘으로 변경
@@ -119,7 +119,7 @@ public class Hmain extends JFrame implements ActionListener {
 			} else if (Click.equals(joinBtn)) { // 회원가입버튼 누를때
 				Join = new Join(Ccon);
 				this.setVisible(false);
-			} else if (Click.equals(reBtn)) { // 비회원예약버튼 누를때
+			} else if (Click.equals(reBtn)) { // 예약버튼 누를때
 				new Choice(Ccon);
 				this.setVisible(false);
 			}
@@ -131,7 +131,7 @@ public class Hmain extends JFrame implements ActionListener {
 			} else if (Click.equals(joinBtn)) { // 회원가입버튼 누를때
 				Join = new Join(Ccon);
 				this.setVisible(false);
-			} else if (Click.equals(reBtn)) { // 비회원예약버튼 누를때
+			} else if (Click.equals(reBtn)) { // 예약버튼 누를때
 				new Choice(Ccon);
 				this.setVisible(false);
 			}
